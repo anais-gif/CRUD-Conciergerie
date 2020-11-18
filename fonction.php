@@ -68,39 +68,36 @@ function remote(){
 }
 }
 ///////////////////////////////////////////////historique
-// function historique(){
-//     $bdd = new PDO('mysql:host=localhost;dbname=maintenance;charset=utf8', 'root', '');
-//     if(isset($_GET['action']) && $_GET['action']=="historique"){
-//     $etage = $_GET['etage'];
-//     $recup= $bdd->prepare('SELECT * FROM intervention WHERE Etage_intervention = :etage');
-//     $recup->bindParam(':etage', $etage);
-//     $recup->execute();
+function historique(){
+    $bdd = new PDO('mysql:host=localhost;dbname=maintenance;charset=utf8', 'root', '');
+    if(isset($_GET['action']) && $_GET['action']=="historique"){
+    $etage = $_GET['etage'];
+    $recup= $bdd->prepare('SELECT * FROM intervention WHERE Etage_intervention = :etage');
+    $recup->bindParam(':etage', $etage);
+    $recup->execute();
     
-//     echo '<div class="container">
-//     <h4 class=" text-center py-3"> Historique Etage '.$etage.'</h4>
-//     <table class="table">
-//     <thead class="bg_entete_tab">
-//     <tr>
-    
-//     <th scope="col">ETAGE</th>
-//     <th scope="col">TYPE</th>
-//     <th scope="col">DATE</th>
-//     <from>
-//     <button type="submit" value="remote" name="supp"class="btn btn-secondary" >Supprimer</button></from>
-//     </tr>
-//     </thead>
-//     <tbody>';
+    echo '<table class="table tablemagic">
+    <h4 class=" text-center py-5"> HISTORIQUE ETAGE '.$etage.'</h4>
+    <thead class="thead-dark">
+
+        <tr>
+            <th scope="col">ETAGE </th>
+            <th scope="col">DESCRIPTION</th>
+            <th scope="col">DATE</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>';
     
     
     
-//     while($donnees = $recup->fetch())
-//     {
-//     echo '<tr class=" "><td>'.$donnees['Etage_intervention'].'</td><td>'.$donnees['Type_intervention'].'</td><td>'.$donnees['Date_intervention'].'</td></tr>';
-//     }
-//     echo'</tbody></table></div>';
-//     }
+    while($donnees = $recup->fetch())
+    {
+    echo '<tr class=" "><td>'.$donnees['Etage_intervention'].'</td><td>'.$donnees['Type_intervention'].'</td><td>'.$donnees['Date_intervention'].'</td></tr>';
+    }
+    echo'</tbody></table></div>';
+    }
     
-//     }
+    }
     
 ///////////////////////////////////////////////historique date
 function historique_date(){
@@ -111,15 +108,15 @@ function historique_date(){
     $recupe->bindParam(':date', $date);
     $recupe->execute();
     
-    echo '<div class="container">
+    echo '<table class="table tablemagic">
     <h4 class=" text-center py-3"> Historique Etage '.$date.'</h4>
-    <table class="table">
-    <thead class="bg_entete_tab">
+    <thead class="thead-dark">
     <tr>
     
     <th scope="col">ETAGE</th>
     <th scope="col">TYPE</th>
     <th scope="col">DATE</th>
+    <th scope="col"></th>
     </tr>
     </thead>
     <tbody>';
@@ -134,34 +131,5 @@ function historique_date(){
     }
     
     }
-    function historique(){
-        $bdd = new PDO('mysql:host=localhost;dbname=maintenance;charset=utf8', 'root', '');
-        if(isset($_GET['action']) && $_GET['action']=="historique"){
-        $etage = $_GET['etage'];
-        $recup= $bdd->prepare('SELECT * FROM intervention WHERE Etage_intervention = :etage');
-        $recup->bindParam(':etage', $etage);
-        $recup->execute();
-        
-        echo '<table class="table tablemagic">
-        <h4 class=" text-center py-3"> HISTORIQUE ETAGE '.$etage.'</h4>
-        <thead class="thead-dark">
-
-            <tr>
-                <th scope="col">ETAGE </th>
-                <th scope="col">DESCRIPTION</th>
-                <th scope="col">DATE</th>
-                <th scope="col"></th>
-            </tr>
-        </thead>';
-        
-        
-        
-        while($donnees = $recup->fetch())
-        {
-        echo '<tr class=" "><td>'.$donnees['Etage_intervention'].'</td><td>'.$donnees['Type_intervention'].'</td><td>'.$donnees['Date_intervention'].'</td><td>'.'<button type="submit" value="remote" name="supp"class="btn btn-secondary" >Supprimer</button>'.'</td></tr>';
-        }
-        echo'</tbody></table></div>';
-        }
-        
-        }
+    
 ?>
