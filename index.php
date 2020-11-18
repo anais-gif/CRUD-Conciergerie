@@ -1,4 +1,10 @@
+
+<?php
+include('fonction.php');
+?>
+
 <head>
+
     <!-- CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
         integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
@@ -25,164 +31,62 @@ catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br/>";
     die();
 }
+//////////////////////////////////////////////////////////ADD AN INTERVENTION
 ?>
-
-
     <form method='GET'>
     <label for='date'>Veuillez remplire les tache effectuer</label>
         <input type="date"  name="Date" >
         <input type="text" name="Type"placeholder='Description' >
         <input type="number"  name="Etage" placeholder='Etage'>
-
         <button type="submit" value="add" name="add" class="btn btn-secondary">Ajouter</button>
-        
-    
+        <?php add();?>
     </form>
 
-
 <?php
+                                                
 
-                                                // ADD AN INTERVENTION
-
-    if(isset($_GET['add']) && !empty($_GET['Date']) && !empty($_GET['Type']) && !empty($_GET['Etage'])){
-        $getAction = $_GET['Date'];
-        $add = $db->prepare('INSERT INTO intervention (Date_intervention, Type_intervention, Etage_intervention) 
-        VALUES (:Date, :Type, :Etage)');
-        $add->bindParam(':Date',$_GET['Date'],
-        PDO::PARAM_STR);
-        $add->bindParam(':Type',$_GET['Type'],
-        PDO::PARAM_STR);
-        $add->bindParam(':Etage',$_GET['Etage'],
-        PDO::PARAM_INT);
-        $push = $add->execute();
-
-            if($push){
-                echo "Vôtre intervention à bien été enregistré !";
-
-            }else{
-                echo "Vôtre intervention n'a pas été enregistré !";
-            }
-    }
-
-   
-                                                 // DISPLAY INTERVENTION 
-       $query='SELECT * FROM Etage_intervention'; 
-       $param=[];
-       if(!empty($_['q'])){
-           $query .="WHERE Date LIKE :date";
-           $param['date']='%'. $_GET['q'].'%';
-       }
-$query .='LIMIT 20';
-       $statement=$db->prepare($query);
-       $statement->execute($param);
-        $poo=$statement->fetchAll();
-//  $req =$db->prepare('SELECT *FROM intervention');
-//  $reqOk=$req->execute();
-//  $task=$req->fetchAll();                                                
-
-    ?>
-<form action=''>
-    <div class='form-group'>
-        <input type='text' class='form-control' name='q'placeholder='recherche'>
-    </div>
-<button class='btn btn-primary'>RECHERCHE</button>
-</form>
-
-
-
-
-
-
-    <table class="table">
-    <thead class="thead-dark">
-        <tr>
-            <th scope="col">ID</th>
-            <th scope="col" >DATE </th>
-            <th scope="col" >TYPE</th>
-            <th scope="col" >ETAGE</th>
-            <th scope="col" ></th>
-            <th scope="col" ></th>
-        </tr>
-    </thead>
-    <tbody>
-    <?php foreach($task as $task): ?>
-        <tr>
-            <th scope="col" ><?=$task['id']?></th>
-            <th scope="col" ><?=$task['Date_intervention']?></th>
-            <th scope="col" ><?=$task['Type_intervention']?></th>
-            <th scope="col" ><?=$task['Etage_intervention']?></th>
-            <!-- <th scope="col" ><button type="submit" value="supp" name="remote"class="btn btn-secondary" >Supprimer</button></th>
-            <th scope="col" ><button type="submit" value="edit" name="action"class="btn btn-secondary" >Modifier</button></th>
-        </tr> -->
-    <?php endforeach; ?>
-    </tbody>
-    </table>
-<?php
-
+/////////////////////////////////////////////////////END ADD AN INTERVENTION
+/////////////////////////////////////////////////////EDIT AN INTERVENTION
 ?>
-
-                                                <!-- EDIT AN  INTERVENTION -->
-
     <form method='GET' >
-    
     <label >Veuillez modifier les tache effectuer </label>
         <input type="text"  name="edit_id" placeholder='id'>
         <input type="date"  name="edit_Date">
         <input type="text"  name="edit_Type"placeholder='Description'>
         <input type="text"  name="edit_Etage"placeholder="Etage">
         <button type="submit" value="edit" name="modiv"class="btn btn-secondary" >Modifier</button>
-       
-        
+        <?php edit();?>
+    </form>          
+
+    <?php                                           
+
     
-    </form>
-
-                                                 
-    <?php
-                                                // EDIT AN INTERVENTION *******
-
-    if(isset($_GET['modiv']) && $_GET['modiv']=="edit" && !empty($_GET['edit_id'])
-    && !empty($_GET['edit_Date']) && !empty($_GET['edit_Type']) && !empty($_GET['edit_Etage'])){
-
-        $edit = $db->prepare('UPDATE intervention SET Date_intervention=:editDate,
-         Type_intervention=:editType,Etage_intervention=:editEtage WHERE id= :id');
-        $edit->bindParam(':id',$_GET['edit_id'], PDO::PARAM_STR);
-        $edit->bindParam(':editDate',$_GET['edit_Date'], PDO::PARAM_STR);
-        $edit->bindParam(':editType',$_GET['edit_Type'], PDO::PARAM_STR);
-        $edit->bindParam(':editEtage',$_GET['edit_Etage'], PDO::PARAM_INT);
-
-        $edit=$edit->execute();
-            if($edit){
-                echo "Vôtre modification a bien été pris en compte ! ";
-            }else{
-                echo "Vôtre modification n'a pas pu être pris en compte !";
-            }
-    }
+////////////////////////////////////////////////// END EDIT AN INTERVENTION
+//////////////////////////////////////////////////REMOTE AN INTERVENTION
 ?>
 <form method='GET' >
-    
     <label >Veuillez supprimer les tache effectuer </label>
         <input type="text"  name="id" placeholder='id'>
         <button type="submit" value="remote" name="supp"class="btn btn-secondary" >Supprimer</button>
-       
-    </form>
+        <?php remote();?>
+</form>
+<?php
+                                            
 
-
-
-    <?php
-                                            //REMOTE AN INTERVENTION
-
-if(isset($_GET['supp']) && $_GET['supp']=="remote"){
-    $remote =$db->prepare('DELETE  FROM intervention WHERE id= :id');
-    $remote ->bindParam(':id',$_GET['id'],
-    PDO::PARAM_INT);
-
-    $remote=$remote->execute();
-    if($remote){
-        echo"Vôtre enregistrement a bien été supprimer";
-        }else{
-            "Veuillez recommencer svp,une erreur est survenue";
-    }
-}
-
-
+//////////////////////////////////////////////////////END REMOTE AN INTERVENTION
+////////////////////////////////////////////////////// DISPLAY HISTORIQUE ETAGE
 ?>
+<form method="GET">
+<input type="number" name="etage" placeholder="choisir un etage">
+<button type="submit" name="action" value="historique"class="btn btn-secondary">Entrer</button>
+<?php historique(); ?>
+</form>
+
+<?php
+////////////////////////////////////////////////////DISPLAY HISTORIQUE DATE
+?>
+<form method="GET">
+<input type="date" name="date" placeholder="choisir une date">
+<button type="submit" name="actionn" value="historique_date"class="btn btn-secondary">Entrer</button>
+<?php historique_date(); ?>
+</form>
