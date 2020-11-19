@@ -2,9 +2,9 @@
 <?php
 include('fonction.php');
 ?>
-
-<head>
-
+<!doctype html >
+<html  lang='fr'>
+<head >
     <!-- CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
         integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
@@ -16,15 +16,15 @@ include('fonction.php');
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous">
     </script>
-    <link rel="icon" type="image/png" href="images/1200px-Hertz-Logo.svg.png" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maintenance de l'établissement </title>
+    <title>Maintenance</title>
 </head>
+<body>
 <div class="container">
-  <div class="row">
-    <div class="col">
-    <h1> Maintenace de l'établissement</h1>
+<div class="row">
+<div class="col text-center">
+    <h1 > Maintenace de l'établissement</h1>
 </div>
 </div>
 </div>
@@ -36,11 +36,12 @@ include('fonction.php');
 ?>
 <div class="container">
   <div class="row">
-    <div class="col">
+    <div class="col text-center">
+    <h3> Veuillez ajouter une intervention</h3>
     <form method='GET' class="form-inline">
-        <input type="date"  class="form-control mb-2 mr-sm-2" name="Date" >
-        <input type="text" class="form-control mb-2 mr-sm-2" name="Type"placeholder='Description' >
-        <input type="number" class="form-control mb-2 mr-sm-2"  name="Etage" placeholder='Etage'>
+        <input type="date"  class="form-control mb-2 mr-sm-5" name="Date" >
+        <input type="text" class="form-control mb-2 mr-sm-5" name="Type"placeholder='Description' >
+        <input type="number" class="form-control mb-2 "  name="Etage" placeholder='Etage'>
         <button type="submit" value="add" name="add" class="btn btn-secondary mb-2">Ajouter</button>
         
     </form>
@@ -61,14 +62,14 @@ include('fonction.php');
 ?>
 <div class="container">
   <div class="row">
-    <div class="col">
+    <div class="col text-center">
+    <h3> Voulez-vous modifier une intervention ?</h3>
     <form method='GET'class="form-inline" >
-        <input type="text"  class="form-control mb-2 mr-sm-2" name="edit_id" placeholder='id'>
-        <input type="date" class="form-control mb-2 mr-sm-2"  name="edit_Date">
-        <input type="text" class="form-control mb-2 mr-sm-2"  name="edit_Type"placeholder='Description'>
-        <input type="text"  class="form-control mb-2 mr-sm-2" name="edit_Etage"placeholder="Etage">
+        <input type="text"  class="form-control mb-2 mr-sm-5" name="edit_id" placeholder='id'>
+        <input type="date" class="form-control mb-2 mr-sm-5"  name="edit_Date">
+        <input type="text" class="form-control mb-2 mr-sm-5"  name="edit_Type"placeholder='Description'>
+        <input type="text"  class="form-control mb-2 " name="edit_Etage"placeholder="Etage">
         <button type="submit" value="edit" name="modiv"class="btn btn-secondary mb-2" >Modifier</button>
-        <?php edit();?>
     </form>   
            <?php
            if(isset($_GET['modiv']) && $_GET['modiv']=="edit" && !empty($_GET['edit_id'])&& !empty($_GET['edit_Date']) && !empty($_GET['edit_Type']) && !empty($_GET['edit_Etage'])){
@@ -83,28 +84,34 @@ include('fonction.php');
 ////////////////////////////////////////////////// END EDIT AN INTERVENTION
 //////////////////////////////////////////////////REMOTE AN INTERVENTION
 // ?>
- <!-- <form method='GET'class="form-inline" >
-   
-       <input type="text"  name="id" class="form-control mb-2 mr-sm-2"placeholder='id'>
+
+<div class="container">
+  <div class="row">
+    <div class="col text-center">
+    <h3> Voulez-vous supprimer une intervention ?</h3>
+        <form method='GET'class="form-inline" >
+       <input type="text"  name="id" class="form-control mb-2 "placeholder='id'>
          <button type="submit" value="remote" name="supp"class="btn btn-secondary mb-2" >Supprimer</button>
- </form> -->
+ </form>
+ </div>
+ </div>
+ </div>
  <?php
-             if(isset($_GET['supp']) && $_GET['supp']=="remote"){
-                 remote();
-             }                                
+                                          
 
 //////////////////////////////////////////////////////END REMOTE AN INTERVENTION
 ////////////////////////////////////////////////////// DISPLAY HISTORIQUE 
 ?>
 <div class="container">
   <div class="row">
-    <div class="col-8">
+    <div class="col text-center">
+    <h3> Voir les historiques des interventions </h3>
 <form method="GET"class="form-inline" >
-<input type="date" class="form-control mb-2 mr-sm-2" name="date" id="date" placeholder="Recherche">
-<button type="submit" name="actionn" value="historique_date"class="btn btn-secondary mb-2">Entrer</button>
+<input type="date" class="form-control mb-2 " name="date" id="date" placeholder="Recherche">
+<button type="submit" name="actionn" value="historique_date"class="btn btn-secondary mb-2 mr-sm-5">Entrer</button>
 
-<input type="number" name="etage" class="form-control mb-2 mr-sm-2" placeholder="choisir un etage">
-<button type="submit" name="action" value="historique"class="btn btn-secondary mb-2">Entrer</button><br>
+<input type="number" name="etage" class="form-control mb-2 " placeholder="choisir un etage">
+<button type="submit" name="action" value="historique"class="btn btn-secondary mb-2 ">Entrer</button><br>
 </form>
 <?php 
     if(isset($_GET['action']) && $_GET['action']=="historique"){
@@ -117,9 +124,13 @@ if(isset($_GET['actionn']) && $_GET['actionn']=="historique_date"){
 </div>
 </div>
 </div>
-
-<?php  ?>
-
+<?php
+if(isset($_GET['supp']) && $_GET['supp']=="remote"){
+    remote();
+}  
+?>
+</body>
+</html>
 
 
 

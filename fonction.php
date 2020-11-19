@@ -76,15 +76,17 @@ function historique(){
     $recup->bindParam(':etage', $etage);
     $recup->execute();
     
-    echo '<table class="table tablemagic">
-    <h4 class=" text-center py-5"> HISTORIQUE ETAGE '.$etage.'</h4>
+    echo '<table class="table ">
+    <h4 class=" text-center py-3"> HISTORIQUE ETAGE '.$etage.'</h4>
+    
     <thead class="thead-dark">
 
         <tr>
+            <th scope="col">ID </th>
             <th scope="col">ETAGE </th>
             <th scope="col">DESCRIPTION</th>
             <th scope="col">DATE</th>
-            <th scope="col"></th>
+            
         </tr>
     </thead>';
     
@@ -92,8 +94,9 @@ function historique(){
     
     while($donnees = $recup->fetch())
     {
-    echo '<tr class=" "><td>'.$donnees['Etage_intervention'].'</td><td>'.$donnees['Type_intervention'].'</td><td>'.$donnees['Date_intervention'].'</td></tr>';
-    }
+    echo '<tr class=" "><td>'.$donnees['id'].'</td><td>'.$donnees['Etage_intervention'].'</td><td>'.$donnees['Type_intervention'].'</td><td>'.$donnees['Date_intervention'].'</td></tr>';
+    
+}
     echo'</tbody></table></div>';
     }
     
@@ -108,15 +111,16 @@ function historique_date(){
     $recupe->bindParam(':date', $date);
     $recupe->execute();
     
-    echo '<table class="table tablemagic">
-    <h4 class=" text-center py-3"> Historique Etage '.$date.'</h4>
-    <thead class="thead-dark">
+    echo '<table class="table ">
+    <h4 class=" text-center py-3"> HISTORIQUE PART DATE '.$date.'</h4>
+    <thead class="text-center  thead-dark">
     <tr>
-    
+
+    <th scope="col">ID</th>
     <th scope="col">ETAGE</th>
     <th scope="col">TYPE</th>
     <th scope="col">DATE</th>
-    <th scope="col"></th>
+    
     </tr>
     </thead>
     <tbody>';
@@ -125,7 +129,7 @@ function historique_date(){
     
     while($donnes = $recupe->fetch())
     {
-    echo '<tr class=" "><td>'.$donnes['Etage_intervention'].'</td><td>'.$donnes['Type_intervention'].'</td><td>'.$donnes['Date_intervention'].'</td></tr>';
+    echo '<tr class=" "><td>'.$donnes['id'].'</td><td>'.$donnes['Etage_intervention'].'</td><td>'.$donnes['Type_intervention'].'</td><td>'.$donnes['Date_intervention'].'</td></tr>';
     }
     echo'</tbody></table></div>';
     }
