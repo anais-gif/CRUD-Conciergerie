@@ -30,13 +30,7 @@ include('fonction.php');
 </div>
 
 <?php 
- try {
-    $db = new PDO('mysql:host=localhost;dbname=maintenance', 'root', '');
-    }
-catch (PDOException $e) {
-    print "Erreur !: " . $e->getMessage() . "<br/>";
-    die();
-}
+ connect();
 
 //////////////////////////////////////////////////////////ADD AN INTERVENTION
 ?>
@@ -48,11 +42,17 @@ catch (PDOException $e) {
         <input type="text" class="form-control mb-2 mr-sm-2" name="Type"placeholder='Description' >
         <input type="number" class="form-control mb-2 mr-sm-2"  name="Etage" placeholder='Etage'>
         <button type="submit" value="add" name="add" class="btn btn-secondary mb-2">Ajouter</button>
-        <?php add();?>
+        
     </form>
+    <?php
+        if(isset($_GET['add']) && !empty($_GET['Date']) && !empty($_GET['Type']) && !empty($_GET['Etage'])){
+         add();
+        }?>
+
     </div>
 </div>
 </div>
+
 <?php
                                                 
 
@@ -69,7 +69,11 @@ catch (PDOException $e) {
         <input type="text"  class="form-control mb-2 mr-sm-2" name="edit_Etage"placeholder="Etage">
         <button type="submit" value="edit" name="modiv"class="btn btn-secondary mb-2" >Modifier</button>
         <?php edit();?>
-    </form>          
+    </form>   
+           <?php
+           if(isset($_GET['modiv']) && $_GET['modiv']=="edit" && !empty($_GET['edit_id'])&& !empty($_GET['edit_Date']) && !empty($_GET['edit_Type']) && !empty($_GET['edit_Etage'])){
+            edit();}           
+            ?>
     </div>
 </div>
 </div>
@@ -83,10 +87,11 @@ catch (PDOException $e) {
    
        <input type="text"  name="id" class="form-control mb-2 mr-sm-2"placeholder='id'>
          <button type="submit" value="remote" name="supp"class="btn btn-secondary mb-2" >Supprimer</button>
-         <?php remote();?>
  </form> -->
  <?php
-                                            
+             if(isset($_GET['supp']) && $_GET['supp']=="remote"){
+                 remote();
+             }                                
 
 //////////////////////////////////////////////////////END REMOTE AN INTERVENTION
 ////////////////////////////////////////////////////// DISPLAY HISTORIQUE 
@@ -101,13 +106,19 @@ catch (PDOException $e) {
 <input type="number" name="etage" class="form-control mb-2 mr-sm-2" placeholder="choisir un etage">
 <button type="submit" name="action" value="historique"class="btn btn-secondary mb-2">Entrer</button><br>
 </form>
-
+<?php 
+    if(isset($_GET['action']) && $_GET['action']=="historique"){
+    historique();
+} 
+if(isset($_GET['actionn']) && $_GET['actionn']=="historique_date"){
+    historique_date();
+}
+?>
 </div>
 </div>
 </div>
 
-<?php historique(); ?>
-<?php historique_date(); ?>
+<?php  ?>
 
 
 

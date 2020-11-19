@@ -1,7 +1,8 @@
 <?php
-function db(){
+function connect(){
 try {
-    $db = new PDO('mysql:host=localhost;dbname=maintenance', 'root', '');
+    $bdd = new PDO('mysql:host=localhost;dbname=maintenance', 'root','');
+    return $bdd;
     }
 catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br/>";
@@ -12,8 +13,8 @@ catch (PDOException $e) {
 
 /////////////////////////////////////add an intervention
 function add(){
-    if(isset($_GET['add']) && !empty($_GET['Date']) && !empty($_GET['Type']) && !empty($_GET['Etage'])){
-    $add = db()->prepare('INSERT INTO intervention (Date_intervention, Type_intervention, Etage_intervention) VALUES (:Date, :Type, :Etage)');
+    
+    $add = connect()->prepare('INSERT INTO intervention (Date_intervention, Type_intervention, Etage_intervention) VALUES (:Date, :Type, :Etage)');
     $add->bindParam(':Date',$_GET['Date'],
     PDO::PARAM_STR);
     $add->bindParam(':Type',$_GET['Type'],
@@ -29,33 +30,32 @@ function add(){
             echo "Vôtre intervention n'a pas été enregistré !";
         }
 }
-}
 
 
 //////////////////////////////////////// edit an intervention
 function edit(){
-if(isset($_GET['modiv']) && $_GET['modiv']=="edit" && !empty($_GET['edit_id'])
-&& !empty($_GET['edit_Date']) && !empty($_GET['edit_Type']) && !empty($_GET['edit_Etage'])){
-$edit = db()->prepare('UPDATE intervention SET Date_intervention=:editDate,Type_intervention=:editType,Etage_intervention=:editEtage WHERE id= :id');
-$edit->bindParam(':id',$_GET['edit_id'], PDO::PARAM_STR);
-$edit->bindParam(':editDate',$_GET['edit_Date'], PDO::PARAM_STR);
-$edit->bindParam(':editType',$_GET['edit_Type'], PDO::PARAM_STR);
-$edit->bindParam(':editEtage',$_GET['edit_Etage'], PDO::PARAM_INT);
 
-$edit=$edit->execute();
+    $edit = connect()->prepare('UPDATE intervention SET Date_intervention=:editDate,Type_intervention=:editType,Etage_intervention=:editEtage WHERE id= :id');
+    $edit->bindParam(':id',$_GET['edit_id'], PDO::PARAM_STR);
+    $edit->bindParam(':editDate',$_GET['edit_Date'], PDO::PARAM_STR);
+    $edit->bindParam(':editType',$_GET['edit_Type'], PDO::PARAM_STR);
+    $edit->bindParam(':editEtage',$_GET['edit_Etage'], PDO::PARAM_INT);
+    $edit=$edit->execute();
+
    if($edit){
        echo "Vôtre modification a bien été pris en compte ! ";
    }else{
        echo "Vôtre modification n'a pas pu être pris en compte !";
    }
 }
-}
+
 
 ////////////////////////////////////////remote an intervention 
 
 function remote(){
-    if(isset($_GET['supp']) && $_GET['supp']=="remote"){
-    $remote = db()->prepare('DELETE  FROM intervention WHERE id= :id');
+   
+    
+    $remote = connect()->prepare('DELETE  FROM intervention WHERE id= :id');
     $remote ->bindParam(':id',$_GET['id'],
     PDO::PARAM_INT);
 
@@ -66,13 +66,13 @@ function remote(){
             "Veuillez recommencer svp,une erreur est survenue";
     }
 }
-}
+
 ///////////////////////////////////////////////historique
 function historique(){
-    $bdd = new PDO('mysql:host=localhost;dbname=maintenance;charset=utf8', 'root', '');
-    if(isset($_GET['action']) && $_GET['action']=="historique"){
+    
+    
     $etage = $_GET['etage'];
-    $recup= $bdd->prepare('SELECT * FROM intervention WHERE Etage_intervention = :etage');
+    $recup= connect()->prepare('SELECT * FROM intervention WHERE Etage_intervention = :etage');
     $recup->bindParam(':etage', $etage);
     $recup->execute();
     
@@ -97,14 +97,14 @@ function historique(){
     echo'</tbody></table></div>';
     }
     
-    }
+    
     
 ///////////////////////////////////////////////historique date
 function historique_date(){
-    $bdd = new PDO('mysql:host=localhost;dbname=maintenance;charset=utf8', 'root', '');
-    if(isset($_GET['actionn']) && $_GET['actionn']=="historique_date"){
+    
+    
     $date = $_GET['date'];
-    $recupe= $bdd->prepare('SELECT * FROM intervention WHERE Date_intervention = :date');
+    $recupe= connect()->prepare('SELECT * FROM intervention WHERE Date_intervention = :date');
     $recupe->bindParam(':date', $date);
     $recupe->execute();
     
@@ -130,6 +130,6 @@ function historique_date(){
     echo'</tbody></table></div>';
     }
     
-    }
+    
     
 ?>
