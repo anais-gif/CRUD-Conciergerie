@@ -1,4 +1,9 @@
 <?php
+/**
+ * connect
+ *
+ * @return void
+ */
 function connect(){
 try {
     $bdd = new PDO('mysql:host=localhost;dbname=maintenance', 'root','');
@@ -12,8 +17,13 @@ catch (PDOException $e) {
 }
 
 /////////////////////////////////////add an intervention
+/**
+ * add
+ *
+ * @return void
+ */
 function add(){
-    
+    //retrieve information from the intervention table
     $add = connect()->prepare('INSERT INTO intervention (Date_intervention, Type_intervention, Etage_intervention) VALUES (:Date, :Type, :Etage)');
     $add->bindParam(':Date',$_GET['Date'],
     PDO::PARAM_STR);
@@ -21,8 +31,9 @@ function add(){
     PDO::PARAM_STR);
     $add->bindParam(':Etage',$_GET['Etage'],
     PDO::PARAM_INT);
+    //execute query
     $push = $add->execute();
-
+    //display
         if($push){
             echo "Vôtre intervention à bien été enregistré !";
 
@@ -32,16 +43,22 @@ function add(){
 }
 
 
-//////////////////////////////////////// edit an intervention
+//////////////////////////////////////edit an intervention
+/**
+ * edit
+ *
+ * @return void
+ */
 function edit(){
-
+    //retrieve information from the intervention table
     $edit = connect()->prepare('UPDATE intervention SET Date_intervention=:editDate,Type_intervention=:editType,Etage_intervention=:editEtage WHERE id= :id');
     $edit->bindParam(':id',$_GET['edit_id'], PDO::PARAM_STR);
     $edit->bindParam(':editDate',$_GET['edit_Date'], PDO::PARAM_STR);
     $edit->bindParam(':editType',$_GET['edit_Type'], PDO::PARAM_STR);
     $edit->bindParam(':editEtage',$_GET['edit_Etage'], PDO::PARAM_INT);
+    //execute query
     $edit=$edit->execute();
-
+//display
    if($edit){
        echo "Vôtre modification a bien été pris en compte ! ";
    }else{
@@ -51,15 +68,19 @@ function edit(){
 
 
 ////////////////////////////////////////remote an intervention 
-
+/**
+ * remote
+ *
+ * @return void
+ */
 function remote(){
-   
-    
+   //retrieve id from the intervention table
     $remote = connect()->prepare('DELETE  FROM intervention WHERE id= :id');
     $remote ->bindParam(':id',$_GET['id'],
     PDO::PARAM_INT);
-
+//execute query
     $remote=$remote->execute();
+    //display
     if($remote){
         echo"Vôtre enregistrement a bien été supprimer";
         }else{
@@ -68,14 +89,19 @@ function remote(){
 }
 
 ///////////////////////////////////////////////historique
+/**
+ * historique
+ *
+ * @return void
+ */
 function historique(){
-    
-    
+    //retrieve etage-intervention from the intervention table
     $etage = $_GET['etage'];
     $recup= connect()->prepare('SELECT * FROM intervention WHERE Etage_intervention = :etage');
     $recup->bindParam(':etage', $etage);
+    //execute query
     $recup->execute();
-    
+    //display
     echo '<table class="table ">
     <h4 class=" text-center py-3"> HISTORIQUE ETAGE '.$etage.'</h4>
     
@@ -103,14 +129,21 @@ function historique(){
     
     
 ///////////////////////////////////////////////historique date
+/**
+ * historique_date
+ *
+ * @return void
+ */
 function historique_date(){
     
-    
+
+    // retrieve iDate_intervention from the intervention table
     $date = $_GET['date'];
     $recupe= connect()->prepare('SELECT * FROM intervention WHERE Date_intervention = :date');
     $recupe->bindParam(':date', $date);
+    //execute query
     $recupe->execute();
-    
+    //display
     echo '<table class="table ">
     <h4 class=" text-center py-3"> HISTORIQUE PART DATE '.$date.'</h4>
     <thead class="text-center  thead-dark">

@@ -23,13 +23,14 @@ include('fonction.php');
 <body>
 <div class="container">
 <div class="row">
-<div class="col text-center">
-    <h1 > Maintenace de l'établissement</h1>
+<div class="col-12 text-center back">
+    <h1 > Maintenace </h1>
 </div>
 </div>
 </div>
 
 <?php 
+
  connect();
 
 //////////////////////////////////////////////////////////ADD AN INTERVENTION
@@ -46,6 +47,7 @@ include('fonction.php');
         
     </form>
     <?php
+    //if the condition is met then the add button works
         if(isset($_GET['add']) && !empty($_GET['Date']) && !empty($_GET['Type']) && !empty($_GET['Etage'])){
          add();
         }?>
@@ -72,6 +74,7 @@ include('fonction.php');
         <button type="submit" value="edit" name="modiv"class="btn btn-secondary mb-2" >Modifier</button>
     </form>   
            <?php
+           //if the condition is met, the action edit works
            if(isset($_GET['modiv']) && $_GET['modiv']=="edit" && !empty($_GET['edit_id'])&& !empty($_GET['edit_Date']) && !empty($_GET['edit_Type']) && !empty($_GET['edit_Etage'])){
             edit();}           
             ?>
@@ -114,9 +117,11 @@ include('fonction.php');
 <button type="submit" name="action" value="historique"class="btn btn-secondary mb-2 ">Entrer</button><br>
 </form>
 <?php 
+//if the condition is met, the action historique works
     if(isset($_GET['action']) && $_GET['action']=="historique"){
     historique();
 } 
+//if the condition is met, the action historique_date works
 if(isset($_GET['actionn']) && $_GET['actionn']=="historique_date"){
     historique_date();
 }
@@ -125,6 +130,7 @@ if(isset($_GET['actionn']) && $_GET['actionn']=="historique_date"){
 </div>
 </div>
 <?php
+//if the condition is met, the action remote works
 if(isset($_GET['supp']) && $_GET['supp']=="remote"){
     remote();
 }  
