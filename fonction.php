@@ -26,7 +26,8 @@
  */
 function add(){
     /*
-    *retrieve information from the intervention table
+    *Retrieve information from the intervention table
+    *Récuperer les information de la table intervention 
     */
         $add = connect()->prepare('INSERT INTO intervention (Date_intervention, Type_intervention, Etage_intervention) VALUES (:Date, :Type, :Etage)');
         $add->bindParam(':Date',$_GET['Date'],
@@ -36,11 +37,13 @@ function add(){
         $add->bindParam(':Etage',$_GET['Etage'],
         PDO::PARAM_INT);
     /*
-    *execute query
+    *Execute request
+    *Executer la requête
     */
         $push = $add->execute();
     /*
-    *display
+    *Display
+    *Afficher
     */
         if($push){
             echo "Vôtre intervention à bien été enregistré !";
@@ -62,7 +65,8 @@ function add(){
  */
 function edit(){
     /*
-    *retrieve informations from the intervention table
+    *Retrieve informations from the intervention table
+    *Récuperer les information de la table intervention 
     */
         $edit = connect()->prepare('UPDATE intervention SET Date_intervention=:editDate,Type_intervention=:editType,Etage_intervention=:editEtage WHERE id= :id');
         $edit->bindParam(':id',$_GET['edit_id'], PDO::PARAM_STR);
@@ -70,11 +74,13 @@ function edit(){
         $edit->bindParam(':editType',$_GET['edit_Type'], PDO::PARAM_STR);
         $edit->bindParam(':editEtage',$_GET['edit_Etage'], PDO::PARAM_INT);
     /*
-    *execute query
+    *Execute request
+    *Executer la requête
     */
         $edit=$edit->execute();
     /*
-    *display
+    *Display
+    *Afficher
     */
         if($edit){
              echo "Vôtre modification a bien été pris en compte ! ";
@@ -96,16 +102,19 @@ function edit(){
 function remote(){
    /*
    *retrieve id from the intervention table
+   *Récuperer l'id de la table intervention 
    */
         $remote = connect()->prepare('DELETE  FROM intervention WHERE id= :id');
         $remote ->bindParam(':id',$_GET['id'],
         PDO::PARAM_INT);
     /*
-    *execute query
+    *Execute request
+    *Executer la requête
     */
         $remote=$remote->execute();
     /*
-    *display
+    *Display
+    *Afficher
     */
         if($remote){
             echo"Vôtre enregistrement a bien été supprimer";
@@ -125,17 +134,20 @@ function remote(){
  */
 function historique(){
     /*
-    *retrieve etage-intervention from the intervention table
+    *retrieve etage_intervention from the intervention table
+    *Récuperer etage_intervention de la table intervention 
     */
         $etage = $_GET['etage'];
         $recup= connect()->prepare('SELECT * FROM intervention WHERE Etage_intervention = :etage');
         $recup->bindParam(':etage', $etage);
     /*
-    *execute query
+    *Execute request
+    *Executer la requête
     */
         $recup->execute();
     /*
-    *display
+    *Display
+    *Afficher
     */
         echo '<table class="table ">
         <h4 class=" text-center py-3"> HISTORIQUE ETAGE '.$etage.'</h4>
@@ -171,17 +183,20 @@ function historique(){
  */
 function historique_date(){
     /*
-    *retrieve iDate_intervention from the intervention table
+    *retrieve Date_intervention from the intervention table
+    *Récuperer Date_intervention de la table intervention 
     */
         $date = $_GET['date'];
         $recupe= connect()->prepare('SELECT * FROM intervention WHERE Date_intervention = :date');
         $recupe->bindParam(':date', $date);
     /*
-    *execute query
+    *Execute request
+    *Executer la requête
     */
         $recupe->execute();
     /*
-    *display
+    *Display
+    *Afficher
     */
         echo '<table class="table ">
         <h4 class=" text-center py-3"> HISTORIQUE PART DATE '.$date.'</h4>

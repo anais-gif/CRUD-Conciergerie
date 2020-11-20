@@ -25,7 +25,7 @@ include('fonction.php');
         <div class="container">
             <div class="row">
                 <div class="col-12 text-center back">
-                    <h1> Maintenace </h1>
+                    <h1> Maintenance </h1>
                 </div>
             </div>
         </div>
@@ -46,7 +46,8 @@ include('fonction.php');
                         </form>
 <?php
     /*
-    *if the condition is met then the add button works
+    *If the condition is met then the add button works
+    *Si la condition est remplie, le bouton ajouter fonctionne
     */
         if(isset($_GET['add']) && !empty($_GET['Date']) && !empty($_GET['Type']) && !empty($_GET['Etage'])){
          add();
@@ -71,7 +72,8 @@ include('fonction.php');
                         </form>   
 <?php
     /*
-    *if the condition is met, the action edit works
+    *If the condition is met, the action edit works
+    *Si la condition est remplie, le bouton modifier fonctionne
     */
         if(isset($_GET['modiv']) && $_GET['modiv']=="edit" && !empty($_GET['edit_id'])&& !empty($_GET['edit_Date']) && !empty($_GET['edit_Type']) && !empty($_GET['edit_Etage'])){
             edit();
@@ -108,13 +110,15 @@ include('fonction.php');
                         </form>
 <?php 
     /*
-    *if the condition is met, the action historique works
+    *If the condition is met, the action historique works
+    *Si la condition est remplie, l'action historique fonctionne
     */
         if(isset($_GET['action']) && $_GET['action']=="historique"){
             historique();
 } 
     /*
     *if the condition is met, the action historique_date works
+    *Si la condition est remplie, l'action historique_date fonctionne
     */
         if(isset($_GET['actionn']) && $_GET['actionn']=="historique_date"){
             historique_date();
@@ -126,6 +130,7 @@ include('fonction.php');
 <?php
     /*
     *if the condition is met, the action remote works
+    *Si la condition est remplie, le bouton supprimer fonctionne
     */
         if(isset($_GET['supp']) && $_GET['supp']=="remote"){
             remote();
